@@ -1,0 +1,39 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+bool isVaild(string str) {
+
+	int alpha = str.find('@', 0);
+	int dot = str.find('.', 0);
+
+	if (alpha == -1 || dot == -1) return false;
+
+	string mail[3];
+	mail[0] = str.substr(0, alpha);
+	mail[1] = str.substr(alpha + 1, dot - alpha - 1);
+	mail[2] = str.substr(dot + 1, str.length() - dot);
+
+	for (int i = 0; i < 3; i++) {
+		int len = mail[i].length();
+		for (int j = 0; j < len; j++) {
+			char ch = mail[i][j];
+			if (ch >= 'A' && ch <= 'Z') continue;
+			else if (ch >= 'a' && ch <= 'z') continue;
+			else if (ch >= '0' && ch <= '9') continue;
+
+			return false;
+		}
+	}
+	return true;
+}
+
+int main() {
+	string str;
+	cin >> str;
+
+	if (isVaild(str)) cout << "yes";
+	else cout << "no";
+
+	return 0;
+}

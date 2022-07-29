@@ -1,0 +1,47 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+struct Node {
+	int local;
+	int price;
+};
+
+vector<vector<Node>> alist(5);
+int used[5];
+int x, y;
+int mini = 21e8;
+
+void go(int now, int sum) {
+	if (now == y) {
+		if (mini > sum) {
+			mini = sum;
+		}
+		return;
+	}
+	for (int i = 0; i < alist[now].size(); i++) {
+		Node next = alist[now][i];
+		if (used[next.local] == 1) continue;
+		used[next.local] = 1;
+		go(next.local, sum + next.price);
+		used[next.local] = 0;
+	}
+}
+
+int main(){
+	alist[1] = { {2,7} };
+	alist[2] = { {3,5},{4,10} };
+	alist[3] = { {4,2} };
+
+	cin >> x >> y;
+
+	used[x] = 1;
+
+	go(x, 0);
+
+	if (mini == 21e8) cout << "갈 수 없다";
+	else cout << mini;
+
+	return 0;
+}
+	

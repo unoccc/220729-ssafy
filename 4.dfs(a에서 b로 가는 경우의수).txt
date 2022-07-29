@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+vector<vector<int>> v(5);
+int used[5];
+int cnt = 0;
+
+void dfs(int now, int des) {
+	if (now == des) {
+		cnt++;
+		return;
+	}
+
+	for (int i = 0; i < v[now].size(); i++) {
+		int next = v[now][i];
+		if (used[next] == 1) continue;
+		used[next] = 1;
+		dfs(next, des);
+		used[next] = 0;
+	}
+}
+
+int main(){
+	v[1] = { 2,3,4 };
+	v[2] = { 3,4 };
+	v[3] = { 1,4};
+	v[4] = {};
+
+	int x, y;
+	cin >> x >> y;
+	used[x] = 1;
+	
+	dfs(x,y);
+
+	cout << cnt;
+
+	return 0;
+}
+	

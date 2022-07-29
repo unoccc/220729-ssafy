@@ -1,0 +1,67 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string solution(vector<string> registered_list, string new_id) {
+	while (1) {
+		//new_id와 registered_list 비교
+		int flag = 1;
+		for (int i = 0; i < registered_list.size(); i++) {
+			if (registered_list[i] == new_id) {
+				flag = 0;
+			}
+		}
+		if (flag) break; // 같은게 없으면 break
+
+		//S 와 N 따로 입력
+		string S = "";
+		string N = "";
+		for (int i = 0; i < new_id.size(); i++) {
+			if (new_id[i] >= 'a' && new_id[i] <= 'z') S += new_id[i];
+			if (new_id[i] >= '0' && new_id[i] <= '9') N += new_id[i];
+		}
+
+		// N1 생성
+		string N1;
+		if (N == "") N1 = "1";
+		else {
+			N1 = to_string(stoi(N) + 1);
+		}
+
+		// S + N1을 new_id에 다시 집어넣기
+		new_id = S + N1;
+	}
+
+	return new_id;
+}
+int main()
+{
+	vector<vector<string>> registered_list = {
+		{ "card", "ace13", "ace16", "banker", "ace17", "ace14" },
+		{ "cow", "cow1", "cow2", "cow3", "cow4", "cow9", "cow8", "cow7", "cow6", "cow5"},
+		{ "bird99", "bird98", "bird101", "gotoxy"},
+		{ "apple1", "orange", "banana3"},
+		{"bt1008","bt1003","bt1004","bt1005","bt1006","bt1007","bt1002"},
+		{"bird99", "bird98", "bird101", "gotoxy"},
+		{"aa9999"},
+	};
+
+	vector<string> result = {
+		"ace15", "cow10", "bird100", "apple", "bt1009", "gotoxy1", "aa10000"
+	};
+
+	vector<string> newID = {
+		"ace15", "cow", "bird98", "apple", "bt1008", "gotoxy", "aa9999"
+	};
+
+	for (int i = 0; i < registered_list.size(); i++) {
+		string yours = solution(registered_list[i], newID[i]);
+
+		if (yours == result[i]) cout << "GOOD!!\n";
+		else cout << "오답입니다\n";
+	}
+
+	return 0;
+}
